@@ -9,11 +9,11 @@ app.use(cors({
 }));
 // import routes
 const testimonialsRoutes = require('./routes/testimonials.routes');
-app.use('/', testimonialsRoutes);
+app.use('/api', testimonialsRoutes);
 const concertsRoutes = require('./routes/concerts.routes');
-app.use('/', concertsRoutes);
+app.use('/api', concertsRoutes);
 const seatsRoutes = require('./routes/seats.routes');
-app.use('/', seatsRoutes);
+app.use('/api', seatsRoutes);
 
 app.use((req, res) => {
     res.status(404).json({ message: 'Not found...' });

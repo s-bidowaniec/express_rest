@@ -1,9 +1,12 @@
 const express = require('express');
-
+const cors = require('cors')
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+app.use(cors({
+    "origin": "http://localhost:3000", //origin sets domains that we approve
+    "methods": "GET,POST", //we allow only GET and POST methods
+}));
 // import routes
 const testimonialsRoutes = require('./routes/testimonials.routes');
 app.use('/', testimonialsRoutes);

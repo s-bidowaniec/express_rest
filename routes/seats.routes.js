@@ -12,8 +12,14 @@ router.get('/seats/:id', (req, res) => {
     res.json(db.seats.find((seat) => String(seat.id) === req.params.id));
 });
 router.post('/seats', (req, res) => {
-    db.seats.push({ id: short(), ...req.body });
-    res.json({ message: 'OK' });
+    const alreadyReservedSeat = db.seats.some((seat) => seat.day == req.body.day && seat.seat == req.body.seat);
+    if (alreadyReservedSeat){
+        res.status(500)
+        res.json({ message: 'The slot is already taken...'  });
+    } else {
+        db.seats.push({id: short(), ...req.body});
+        res.json({ message: 'OK' });
+    }
 });
 router.put('/seats/:id', (req, res) => {
     const seat = db.seats.find((seat) => String(seat.id) === req.params.id);

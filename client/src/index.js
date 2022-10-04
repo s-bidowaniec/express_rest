@@ -10,11 +10,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/global.scss';
 
 const Root = () => (
-  <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
-  </Provider>
+    <React.StrictMode>
+        <Provider store={store}>
+            <Router>
+                <App />
+            </Router>
+        </Provider>
+    </React.StrictMode>
 );
 
 ReactDOM.render(<Root />, document.getElementById('root'));

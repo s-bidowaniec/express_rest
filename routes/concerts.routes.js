@@ -1,7 +1,8 @@
 const short = require("shortid");
 const express = require('express');
-const router = express.Router();
 const db = require('./../db');
+const router = express.Router();
+
 router.get('/concerts', (req, res) => {
     res.json(db.concerts);
 });

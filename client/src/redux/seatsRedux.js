@@ -32,7 +32,6 @@ export const loadSeatsRequest = () => {
     dispatch(startRequest({ name: 'LOAD_SEATS' }));
     try {
       let res = await axios.get(`${API_URL}/seats`);
-      //await new Promise((resolve) => setTimeout(resolve, 2000));
       dispatch(loadSeats(res.data));
       dispatch(endRequest({ name: 'LOAD_SEATS' }));
     } catch(e) {

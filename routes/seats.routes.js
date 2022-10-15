@@ -18,8 +18,10 @@ router.post('/seats', (req, res) => {
         res.status(500)
         res.json({ message: 'The slot is already taken...'  });
     } else {
-        db.seats.push({id: short(), ...req.body});
+        const seat = {id: short(), ...req.body}
+        db.seats.push(seat);
         res.json({ message: 'OK' });
+        req.io.emit('seatsUpdated', db.seats)
     }
 });
 router.put('/seats/:id', (req, res) => {

@@ -1,40 +1,12 @@
-const short = require("shortid");
 const express = require('express');
-const db = require('./../db');
 const router = express.Router();
+const seatsController = require('../controllers/seats.controller')
 
-router.get('/seats', (req, res) => {
-    res.json(db.seats);
-});
-router.get('/seats/random', (req, res) => {
-    res.json(db.seats[Math.floor(Math.random() * db.seats.length)]);
-});
-router.get('/seats/:id', (req, res) => {
-    res.json(db.seats.find((seat) => String(seat.id) === req.params.id));
-});
-router.post('/seats', (req, res) => {
-    const alreadyReservedSeat = db.seats.some((seat) => seat.day == req.body.day && seat.seat == req.body.seat);
-    if (alreadyReservedSeat){
-        res.status(500)
-        res.json({ message: 'The slot is already taken...'  });
-    } else {
-        const seat = {id: short(), ...req.body}
-        db.seats.push(seat);
-        res.json({ message: 'OK' });
-        req.io.emit('seatsUpdated', db.seats)
-    }
-});
-router.put('/seats/:id', (req, res) => {
-    const seat = db.seats.find((seat) => String(seat.id) === req.params.id);
-    const seatId = db.seats.indexOf(seat)
-    db.seats[seatId]={ id: req.params.id, ...req.body };
-    res.json({ message: 'OK' });
-});
-router.delete('/seats/:id', (req, res) => {
-    const seat = db.seats.find((seat) => String(seat.id) === req.params.id);
-    const seatId = db.seats.indexOf(seat)
-    db.seats.splice(db.seats.indexOf(seatId), 1);
-    res.json({ message: 'OK' });
-});
+router.get('/seats', seatsController.getAll);
+router.get('/seats/random', seatsController.getRandom);
+router.get('/seats/:id', seatsController.getById);
+router.post('/seats', seatsController.create);
+router.put('/seats/:id', seatsController.update);
+router.delete('/seats/:id', seatsController.delete);
 
 module.exports = router;

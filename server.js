@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/client/build/index.html'));
 });
-mongoose.connect('mongodb://localhost:27017/NewWaveDB', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://kodilla_29:kamved-kuzxiq-5woPto@cluster0.f63nfzn.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection;
 db.once('open', ()=>{
     console.log('Connected to the database')

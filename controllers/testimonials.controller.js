@@ -1,5 +1,4 @@
 const Testimonial = require('../models/testimonial.model')
-const Concert = require("../models/concert.model");
 
 // GET
 exports.getAll = async (req, res) => {
@@ -13,7 +12,7 @@ exports.getRandom = async (req, res) => {
     try {
         const count = await Testimonial.countDocuments().populate('day');
         const rand = Math.floor(Math.random() * count);
-        const testimonial = Testimonial.findOne().skip(rand);
+        const testimonial = await Testimonial.findOne().skip(rand);
         if (!testimonial) res.status(404).json({message: 'Not found'});
         else res.json(testimonial);
     } catch (err) {

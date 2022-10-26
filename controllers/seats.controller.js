@@ -12,7 +12,7 @@ exports.getRandom = async (req, res) => {
     try {
         const count = await Seat.countDocuments();
         const rand = Math.floor(Math.random() * count);
-        const seat = Seat.findOne().skip(rand);
+        const seat = await Seat.findOne().skip(rand);
         if (!seat) res.status(404).json({message: 'Not found'});
         else res.json(seat);
     } catch (err) {

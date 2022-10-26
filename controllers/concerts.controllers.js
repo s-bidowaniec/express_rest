@@ -12,7 +12,7 @@ exports.getRandom = async (req, res) => {
     try {
         const count = await Concert.countDocuments();
         const rand = Math.floor(Math.random() * count);
-        const concert = Concert.findOne().skip(rand);
+        const concert = await Concert.findOne().skip(rand);
         if (!concert) res.status(404).json({message: 'Not found'});
         else res.json(concert);
     } catch (err) {

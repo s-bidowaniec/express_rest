@@ -21,8 +21,17 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/client/build/index.html'));
 });
-mongoose.connect('mongodb+srv://kodilla_29:kamved-kuzxiq-5woPto@cluster0.f63nfzn.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+// Connect DB
+const NODE_ENV = process.env.NODE_ENV;
+let dbUri = '';
+
+if(NODE_ENV === 'production') dbUri = 'mongodb+srv://kodilla_29:kamved-kuzxiq-5woPto@cluster0.f63nfzn.mongodb.net/?retryWrites=true&w=majority';
+else if(NODE_ENV === 'test') dbUri = 'mongodb://localhost:27017/NewWaveDBtest';
+else dbUri = 'mongodb://localhost:27017/NewWaveDB';
+
+mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
+
 db.once('open', ()=>{
     console.log('Connected to the database')
 })
@@ -58,3 +67,6 @@ app.use('/api', seatsRoutes);
 app.use((req, res) => {
     res.status(404).json({ message: 'Not found...' });
 })
+
+// export
+module.exports = server;

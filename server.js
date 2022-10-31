@@ -68,6 +68,12 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/client/build/index.html'));
 });
+app.get('/order-a-ticket', (req, res) => {
+    res.sendFile(path.join(__dirname, '/client/build/index.html'));
+});
+app.get('/prices', (req, res) => {
+    res.sendFile(path.join(__dirname, '/client/build/index.html'));
+});
 
 // Handle bad requests
 app.use((req, res) => {

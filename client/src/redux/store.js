@@ -10,13 +10,22 @@ const rootReducer = combineReducers({
   concerts,
   seats,
 });
-
-const store = createStore(
-  rootReducer,
-  compose(
-		applyMiddleware(thunk),
-		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-	)
-);
-
+const NODE_ENV = process.env.NODE_ENV;
+let store;
+if(NODE_ENV === 'production') {
+	store = createStore(
+		rootReducer,
+		compose(
+			applyMiddleware(thunk)
+		)
+	);
+} else {
+	store = createStore(
+		rootReducer,
+		compose(
+			applyMiddleware(thunk),
+			window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+		)
+	);
+}
 export default store;

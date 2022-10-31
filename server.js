@@ -11,10 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
-//{
-//    "origin": "http://localhost:3000", //origin sets domains that we approve
-//    "methods": "GET,POST", //we allow only GET and POST methods
-//}
+
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '/client/build')));
 
@@ -63,6 +60,14 @@ app.use((req, res, next) => {
 app.use('/api', testimonialsRoutes);
 app.use('/api', concertsRoutes);
 app.use('/api', seatsRoutes);
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '/client/build')));
+
+// Serve main react app
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '/client/build/index.html'));
+});
 
 // Handle bad requests
 app.use((req, res) => {

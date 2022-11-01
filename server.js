@@ -4,6 +4,7 @@ const path = require('path')
 const socket = require('socket.io')
 const mongoose = require('mongoose')
 const sanitize = require('mongo-sanitize');
+const helmet = require('helmet');
 const testimonialsRoutes = require('./routes/testimonials.routes');
 const concertsRoutes = require('./routes/concerts.routes');
 const seatsRoutes = require('./routes/seats.routes');
@@ -58,12 +59,13 @@ app.use((req, res, next) => {
     next();
 })
 
-// sanitize
+// security
 app.use((req, res, next) => {
     req.body = sanitize(req.body);
     req.params = sanitize(req.params);
     next();
 })
+app.use(helmet());
 
 // use routes
 app.use('/api', testimonialsRoutes);

@@ -3,6 +3,7 @@ const cors = require('cors')
 const path = require('path')
 const socket = require('socket.io')
 const mongoose = require('mongoose')
+const sanitize = require('mongo-sanitize');
 const testimonialsRoutes = require('./routes/testimonials.routes');
 const concertsRoutes = require('./routes/concerts.routes');
 const seatsRoutes = require('./routes/seats.routes');
@@ -56,6 +57,14 @@ app.use((req, res, next) => {
     req.io = io;
     next();
 })
+
+// sanitize
+app.use((req, res, next) => {
+    req.body = sanitize(req.body);
+    req.params = sanitize(req.params);
+    next();
+})
+
 // use routes
 app.use('/api', testimonialsRoutes);
 app.use('/api', concertsRoutes);

@@ -68,7 +68,7 @@ exports.getByDay = async (req, res) => {
 exports.create = async (req, res) => {
     try {
         const { performer, genre, price, day, image } = req.body;
-        const newConcert = new Concert({id, performer, genre, price, day, image})
+        const newConcert = new Concert({ performer, genre, price, day, image })
         await newConcert.save()
         res.json(newConcert)
     } catch (err) {
